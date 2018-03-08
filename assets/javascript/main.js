@@ -41,9 +41,11 @@ function buildList(){
     for(var i = 0; i < notes.length; i++) {
         var liElm = document.createElement("li");
         var pElm = document.createElement("p");
+        var btnEditElm = document.createElement("button")
+        var btnDelElm = document.createElement("button")
         
         if(notes[i].important === true){
-            liElm.style.backgroundColor = "#FFB000";
+            liElm.style.background = "linear-gradient(to right, #FFB000, #FFB000, #fff)";
             liElm.style.color = "#fff";
         }
         
@@ -60,6 +62,27 @@ function buildList(){
         }
         
         ulElm.appendChild(liElm);
+        
+  
+      
+        liElm.appendChild(btnEditElm);
+        liElm.appendChild(btnDelElm);
+
+        btnDelElm.innerHTML = "Delete";
+        btnDelElm.classList.add("delBtn");
+
+        btnEditElm.innerHTML = "Edit";
+        btnEditElm.classList.add("editBtn");
+
+        btnEditElm.setAttribute("data-index",i)
+
+        btnEditElm.addEventListener("click", function(event){
+            var index = event.target.getAttribute("data-index");
+            var note = getLocal();
+            notes[index].text = prompt("Edit");
+            setLocal(notes);
+            buildList();
+        });
     }
 }
 
